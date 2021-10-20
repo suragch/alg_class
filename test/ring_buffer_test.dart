@@ -46,5 +46,8 @@ void main() {
     expect(value, 12);
     value = ringBuffer.read();
     expect(value, 13);
+
+    value = ringBuffer.read();
+    expect(value, null);
   });
 }

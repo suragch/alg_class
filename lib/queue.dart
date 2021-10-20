@@ -1,3 +1,5 @@
+import 'package:alg_class/ring_buffer.dart';
+
 import 'linked_list.dart';
 
 abstract class Queue<E> {
@@ -39,4 +41,25 @@ class QueueLinkedList<E> implements Queue<E> {
   String toString() {
     return _list.toString();
   }
+}
+
+class QueueRingBuffer<E> implements Queue<E> {
+  QueueRingBuffer(int length) : _ringBuffer = RingBuffer<E>(length);
+
+  final RingBuffer<E> _ringBuffer;
+
+  @override
+  E? dequeue() => _ringBuffer.read();
+
+  @override
+  void enqueue(E value) {
+    final isSuccessful = _ringBuffer.write(value);
+    if (!isSuccessful) throw Exception('Buffer is full');
+  }
+
+  @override
+  bool get isEmpty => _ringBuffer.isEmpty;
+
+  @override
+  String toString() => _ringBuffer.toString();
 }

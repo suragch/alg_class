@@ -1,9 +1,8 @@
 import 'package:alg_class/binary_tree.dart';
-import 'package:alg_class/tree_node.dart';
 
 void main() {
-  final tree = BinaryTreeNode('A',
-      leftChild: BinaryTreeNode('D'),
+  final tree = BinaryTreeNode('D',
+      leftChild: BinaryTreeNode('A'),
       rightChild: BinaryTreeNode(
         'R',
         leftChild: BinaryTreeNode('T'),

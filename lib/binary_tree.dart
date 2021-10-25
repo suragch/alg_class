@@ -4,44 +4,36 @@ class BinaryTreeNode<T> {
   BinaryTreeNode? leftChild;
   BinaryTreeNode? rightChild;
 
+  // modified from https://stackoverflow.com/a/19484210
   @override
   String toString() {
-    return _toString(StringBuffer(), true, StringBuffer()).toString();
+    final out = StringBuffer();
+    if (rightChild != null) {
+      rightChild!._buildTree(out, true, '');
+    }
+    out.write(value.toString());
+    out.write('\n');
+    if (leftChild != null) {
+      leftChild!._buildTree(out, false, '');
+    }
+    return out.toString();
   }
 
-  StringBuffer _toString(StringBuffer prifix, bool isTail, StringBuffer sb) {
+  void _buildTree(StringBuffer out, bool isRight, String indent) {
     if (rightChild != null) {
-      final newBuffer = StringBuffer();
-      newBuffer.write(prifix);
-      newBuffer.write(isTail ? '│   ' : '    ');
-      rightChild!._toString(newBuffer, false, sb);
+      rightChild!._buildTree(out, true, indent + (isRight ? '     ' : ' │   '));
     }
-    sb.write(prifix);
-    sb.write(isTail ? '└── ' : '┌── ');
-    sb.write(value.toString());
-    sb.write('\n');
+    out.write(indent);
+    if (isRight) {
+      out.write(' ┌───');
+    } else {
+      out.write(' └───');
+    }
+    out.write(' ');
+    out.write(value.toString());
+    out.write('\n');
     if (leftChild != null) {
-      final newBuffer = StringBuffer();
-      newBuffer.write(prifix);
-      newBuffer.write(isTail ? '    ' : '│   ');
-      leftChild!._toString(prifix, true, sb);
+      leftChild!._buildTree(out, false, indent + (isRight ? ' │   ' : '     '));
     }
-    return sb;
   }
 }
-
-// public StringBuilder toString(StringBuilder prefix, boolean isTail, StringBuilder sb) {
-//     if(right!=null) {
-//         right.toString(new StringBuilder().append(prefix).append(isTail ? "│   " : "    "), false, sb);
-//     }
-//     sb.append(prefix).append(isTail ? "└── " : "┌── ").append(value.toString()).append("\n");
-//     if(left!=null) {
-//         left.toString(new StringBuilder().append(prefix).append(isTail ? "    " : "│   "), true, sb);
-//     }
-//     return sb;
-// }
-
-// @Override
-// public String toString() {
-//     return this.toString(new StringBuilder(), true, new StringBuilder()).toString();
-// }

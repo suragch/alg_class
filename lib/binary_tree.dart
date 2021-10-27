@@ -1,39 +1,38 @@
 class BinaryTreeNode<T> {
   BinaryTreeNode(this.value, {this.leftChild, this.rightChild});
-  T value;
-  BinaryTreeNode? leftChild;
-  BinaryTreeNode? rightChild;
 
-  // modified from https://stackoverflow.com/a/19484210
+  T value;
+  BinaryTreeNode<T>? leftChild;
+  BinaryTreeNode<T>? rightChild;
+
   @override
   String toString() {
     final out = StringBuffer();
-    if (rightChild != null) {
-      rightChild!._buildTree(out, true, '');
-    }
-    out.write(value.toString());
-    out.write('\n');
-    if (leftChild != null) {
-      leftChild!._buildTree(out, false, '');
-    }
+
+    final indents = <String>[];
+    rightChild?._buildTree(out, true, indents);
+    out.writeln(value);
+    leftChild?._buildTree(out, false, indents);
+
     return out.toString();
   }
 
-  void _buildTree(StringBuffer out, bool isRight, String indent) {
+  void _buildTree(StringBuffer out, bool isRight, List<String> indents) {
     if (rightChild != null) {
-      rightChild!._buildTree(out, true, indent + (isRight ? '     ' : ' │   '));
+      indents.add(isRight ? '     ' : '│    ');
+      rightChild!._buildTree(out, true, indents);
+      indents.removeLast();
     }
-    out.write(indent);
-    if (isRight) {
-      out.write(' ┌───');
-    } else {
-      out.write(' └───');
-    }
-    out.write(' ');
-    out.write(value.toString());
-    out.write('\n');
+
+    out
+      ..writeAll(indents)
+      ..write(isRight ? '┌─── ' : '└─── ')
+      ..writeln(value);
+
     if (leftChild != null) {
-      leftChild!._buildTree(out, false, indent + (isRight ? ' │   ' : '     '));
+      indents.add(isRight ? '│    ' : '     ');
+      leftChild!._buildTree(out, false, indents);
+      indents.removeLast();
     }
   }
 }

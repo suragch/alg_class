@@ -9,4 +9,7 @@ void main() {
         rightChild: BinaryTreeNode('Fun'),
       ));
   print(tree);
+  // tree.traversePostOrder((value) => print(value));
+  print(tree.checkIsInTree('D')); // true
+  print(tree.checkIsInTree('S')); // false
 }

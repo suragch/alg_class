@@ -5,6 +5,34 @@ class BinaryTreeNode<T> {
   BinaryTreeNode<T>? leftChild;
   BinaryTreeNode<T>? rightChild;
 
+  bool checkIsInTree(T value) {
+    var result = false;
+    traverseInOrder((currentValue) {
+      if (currentValue == value) {
+        result = true;
+      }
+    });
+    return result;
+  }
+
+  void traverseInOrder(void Function(T value) doSomething) {
+    leftChild?.traverseInOrder(doSomething);
+    doSomething(value);
+    rightChild?.traverseInOrder(doSomething);
+  }
+
+  void traversePreOrder(void Function(T value) doSomething) {
+    doSomething(value);
+    leftChild?.traversePreOrder(doSomething);
+    rightChild?.traversePreOrder(doSomething);
+  }
+
+  void traversePostOrder(void Function(T value) doSomething) {
+    leftChild?.traversePostOrder(doSomething);
+    rightChild?.traversePostOrder(doSomething);
+    doSomething(value);
+  }
+
   @override
   String toString() {
     final out = StringBuffer();

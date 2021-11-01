@@ -6,10 +6,25 @@ void main() {
   tree.insert(10);
   tree.insert(79);
   tree.insert(90);
+  tree.insert(12);
+  tree.insert(54);
+  tree.insert(11);
+  tree.insert(9);
+  tree.insert(50);
 
   print(tree);
+  final isInTree = tree.contains(66);
+  print(isInTree);
+  print(tree);
 
-  // const a = 43;
-  // const b = 43;
-  // print(a.compareTo(b));
+  final people = ['Bob', 'Mary', 'Susan'];
+  greetEveryone(people);
+  greetEveryone(people);
+}
+
+void greetEveryone(List<String> people) {
+  for (final person in people) {
+    print('Welcome, $person!');
+  }
+  people[0] = 'Hacker';
 }

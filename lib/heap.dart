@@ -15,11 +15,29 @@ class Heap<E extends Comparable> {
 
   void insert(E value) {
     _list.add(value);
-    final childIndex = _list.length - 1;
-    final parentIndex = _parent(childIndex);
-    final parentValue = _list[parentIndex];
-    if (value.compareTo(parentIndex) > 0) {
-      print('child is larger');
+    _moveUp(_list.length - 1);
+  }
+
+  void _moveUp(int index) {
+    var childIndex = index;
+    var parentIndex = _parent(childIndex);
+    var childValue = _list[childIndex];
+    var parentValue = _list[parentIndex];
+
+    while (childValue.compareTo(parentValue) > 0) {
+      _swap(childIndex, parentIndex);
+      childIndex = parentIndex;
+      parentIndex = _parent(parentIndex);
+      parentValue = _list[parentIndex];
+      if (childIndex == 0) return;
     }
   }
+
+  E? removeRoot() {
+    // swap root and last value
+    // move the root down
+  }
+
+  @override
+  String toString() => _list.toString();
 }

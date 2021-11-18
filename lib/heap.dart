@@ -18,6 +18,18 @@ class Heap<E extends Comparable> {
     _moveUp(_list.length - 1);
   }
 
+  bool get isEmpty => _list.isEmpty;
+
+  // E? get peek => (isEmpty) ? null : _list[0];
+
+  E? get peek {
+    if (isEmpty) {
+      return null;
+    } else {
+      return _list[0];
+    }
+  }
+
   void _moveUp(int index) {
     var childIndex = index;
     var parentIndex = _parent(childIndex);
@@ -33,9 +45,53 @@ class Heap<E extends Comparable> {
     }
   }
 
+  void _moveDown(int index) {
+    var parentIndex = index;
+    var leftIndex = _leftChild(parentIndex);
+    var rightIndex = _rightChild(parentIndex);
+
+    while (true) {
+      var possible = parentIndex;
+
+      // check left
+      if (_list[parentIndex].compareTo(_list[leftIndex]) < 0) {
+        possible = leftIndex;
+      }
+
+      // check right
+      if (rightIndex < _list.length &&
+          _list[possible].compareTo(_list[rightIndex]) < 0) {
+        possible = rightIndex;
+      }
+
+      if (parentIndex == possible) {
+        return;
+      }
+
+      _swap(parentIndex, possible);
+      parentIndex = possible;
+      leftIndex = _leftChild(parentIndex);
+      rightIndex = _rightChild(parentIndex);
+
+      final length = _list.length;
+      if (leftIndex >= length) {
+        return;
+      }
+    }
+  }
+
   E? removeRoot() {
+    if (_list.isEmpty) return null;
+
     // swap root and last value
+    const root = 0;
+    final last = _list.length - 1;
+    _swap(root, last);
+
     // move the root down
+    final value = _list.removeLast();
+    _moveDown(0);
+    return value;
   }
 
   @override

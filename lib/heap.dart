@@ -20,15 +20,7 @@ class Heap<E extends Comparable> {
 
   bool get isEmpty => _list.isEmpty;
 
-  // E? get peek => (isEmpty) ? null : _list[0];
-
-  E? get peek {
-    if (isEmpty) {
-      return null;
-    } else {
-      return _list[0];
-    }
-  }
+  E? get peek => (isEmpty) ? null : _list[0];
 
   void _moveUp(int index) {
     var childIndex = index;

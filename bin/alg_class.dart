@@ -8,7 +8,7 @@ void main() {
   heap.insert(2);
   heap.insert(1);
   print(heap);
-  print(heap.peek); // 10
+  print(heap.peek);
 
   final value = heap.removeRoot();
   print(value);

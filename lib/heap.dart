@@ -1,5 +1,18 @@
+enum HeapType { max, min }
+
 class Heap<E extends Comparable> {
+  Heap({
+    List<E>? values,
+    HeapType type = HeapType.max,
+  }) : _type = type {
+    if (values == null) return;
+    for (final value in values) {
+      insert(value);
+    }
+  }
+
   List<E> _list = [];
+  HeapType _type;
 
   int _leftChild(int parentIndex) => 2 * parentIndex + 1;
 
@@ -22,13 +35,21 @@ class Heap<E extends Comparable> {
 
   E? get peek => (isEmpty) ? null : _list[0];
 
+  bool _firstHasPriority(E valueA, E valueB) {
+    if (_type == HeapType.max) {
+      return valueA.compareTo(valueB) > 0;
+    } else {
+      return valueA.compareTo(valueB) < 0;
+    }
+  }
+
   void _moveUp(int index) {
     var childIndex = index;
     var parentIndex = _parent(childIndex);
     var childValue = _list[childIndex];
     var parentValue = _list[parentIndex];
 
-    while (childValue.compareTo(parentValue) > 0) {
+    while (_firstHasPriority(childValue, parentValue)) {
       _swap(childIndex, parentIndex);
       childIndex = parentIndex;
       parentIndex = _parent(parentIndex);
@@ -43,25 +64,25 @@ class Heap<E extends Comparable> {
     var rightIndex = _rightChild(parentIndex);
 
     while (true) {
-      var possible = parentIndex;
+      var theChosenOne = parentIndex;
 
       // check left
-      if (_list[parentIndex].compareTo(_list[leftIndex]) < 0) {
-        possible = leftIndex;
+      if (_firstHasPriority(_list[leftIndex], _list[parentIndex])) {
+        theChosenOne = leftIndex;
       }
 
       // check right
       if (rightIndex < _list.length &&
-          _list[possible].compareTo(_list[rightIndex]) < 0) {
-        possible = rightIndex;
+          _firstHasPriority(_list[rightIndex], _list[parentIndex])) {
+        theChosenOne = rightIndex;
       }
 
-      if (parentIndex == possible) {
+      if (parentIndex == theChosenOne) {
         return;
       }
 
-      _swap(parentIndex, possible);
-      parentIndex = possible;
+      _swap(parentIndex, theChosenOne);
+      parentIndex = theChosenOne;
       leftIndex = _leftChild(parentIndex);
       rightIndex = _rightChild(parentIndex);
 
@@ -87,5 +108,34 @@ class Heap<E extends Comparable> {
   }
 
   @override
-  String toString() => _list.toString();
+  String toString() {
+    final out = StringBuffer();
+
+    if (_rightChild(0) < _list.length) {
+      _buildTree(_rightChild(0), out, true, '');
+    }
+    out.writeln(_list[0]);
+    if (_leftChild(0) < _list.length) {
+      _buildTree(_leftChild(0), out, false, '');
+    }
+
+    return out.toString();
+  }
+
+  void _buildTree(int index, StringBuffer out, bool isRight, String indent) {
+    if (_rightChild(index) < _list.length) {
+      _buildTree(_rightChild(index), out, true,
+          indent + (isRight ? '     ' : '│    '));
+    }
+
+    out
+      ..write(indent)
+      ..write(isRight ? '┌─── ' : '└─── ')
+      ..writeln(_list[index]);
+
+    if (_leftChild(index) < _list.length) {
+      _buildTree(_leftChild(index), out, false,
+          indent + (isRight ? '│    ' : '     '));
+    }
+  }
 }

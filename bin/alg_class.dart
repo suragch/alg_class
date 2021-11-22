@@ -1,14 +1,11 @@
 import 'package:alg_class/heap.dart';
 
 void main() {
-  final heap = Heap();
-  heap.insert(10);
-  heap.insert(5);
-  heap.insert(7);
-  heap.insert(2);
-  heap.insert(1);
+  final heap = Heap(
+    values: [10, 5, 7, 2, 1],
+    type: HeapType.min,
+  );
   print(heap);
-  print(heap.peek);
 
   final value = heap.removeRoot();
   print(value);

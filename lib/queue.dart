@@ -1,5 +1,6 @@
 import 'package:alg_class/ring_buffer.dart';
 
+import 'heap.dart';
 import 'linked_list.dart';
 
 abstract class Queue<E> {
@@ -62,4 +63,25 @@ class QueueRingBuffer<E> implements Queue<E> {
 
   @override
   String toString() => _ringBuffer.toString();
+}
+
+class PriorityQueue<E extends Comparable> implements Queue<E> {
+  PriorityQueue({bool isMin = false}) {
+    if (isMin) {
+      _heap = Heap<E>(type: HeapType.min);
+    } else {
+      _heap = Heap<E>(type: HeapType.max);
+    }
+  }
+
+  late Heap<E> _heap;
+
+  @override
+  E? dequeue() => _heap.removeRoot();
+
+  @override
+  void enqueue(E value) => _heap.insert(value);
+
+  @override
+  bool get isEmpty => _heap.isEmpty;
 }

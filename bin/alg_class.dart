@@ -1,13 +1,10 @@
 import 'package:alg_class/heap.dart';
+import 'package:alg_class/queue.dart';
 
 void main() {
-  final heap = Heap(
-    values: [10, 5, 7, 2, 1],
-    type: HeapType.min,
-  );
-  print(heap);
-
-  final value = heap.removeRoot();
-  print(value);
-  print(heap);
+  final queue = PriorityQueue(isMin: false);
+  queue.enqueue(5);
+  queue.enqueue(10);
+  queue.enqueue(3);
+  print(queue.dequeue());
 }

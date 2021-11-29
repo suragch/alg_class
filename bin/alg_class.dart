@@ -1,10 +1,9 @@
-import 'package:alg_class/heap.dart';
-import 'package:alg_class/queue.dart';
+import 'package:alg_class/bubble_sort.dart';
+import 'package:alg_class/insertion_sort.dart';
 
 void main() {
-  final queue = PriorityQueue(isMin: false);
-  queue.enqueue(5);
-  queue.enqueue(10);
-  queue.enqueue(3);
-  print(queue.dequeue());
+  final list = [4, 3, 1, 4, 6, 7, 8];
+  print(list);
+  insertionSortFor(list);
+  print(list);
 }

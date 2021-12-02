@@ -4,9 +4,13 @@ List<int> mergeSort(List<int> list) {
   }
   // split list
   final middleIndex = list.length ~/ 2;
-  final left = list.sublist(0, middleIndex);
-  final right = list.sublist(middleIndex, list.length);
+  var left = list.sublist(0, middleIndex);
+  var right = list.sublist(middleIndex, list.length);
+
+  left = mergeSort(left);
+  right = mergeSort(right);
   // merge list
+  return _merge(left, right);
 }
 
 List<int> _merge(List<int> a, List<int> b) {
@@ -14,7 +18,7 @@ List<int> _merge(List<int> a, List<int> b) {
   var aIndex = 0;
   var bIndex = 0;
 
-  while (aIndex < a.length || bIndex < b.length) {
+  while (aIndex < a.length && bIndex < b.length) {
     if (a[aIndex] < b[bIndex]) {
       merged.add(a[aIndex]);
       aIndex++;
@@ -30,7 +34,14 @@ List<int> _merge(List<int> a, List<int> b) {
   }
 
   if (aIndex < a.length) {
-    // TODO add the rest
+    for (var i = aIndex; i < a.length; i++) {
+      merged.add(a[i]);
+    }
+  }
+  if (bIndex < b.length) {
+    for (var i = bIndex; i < b.length; i++) {
+      merged.add(b[i]);
+    }
   }
   return merged;
 }

@@ -1,8 +1,16 @@
-import 'package:alg_class/merge_sort.dart';
+import 'package:alg_class/heap.dart';
+import 'package:alg_class/heap_sort.dart';
 
 void main() {
-  final list = [4, 3, 1, 4, 6, 7, 8];
-
-  final sorted = mergeSort(list);
+  final list = [12, 7, 15, 9, 1, 3];
+  final heap = Heap(type: HeapType.min, values: list);
+  print(heap);
+  // print(heap.removeRoot());
+  // print(heap.removeRoot());
+  // print(heap.removeRoot());
+  // print(heap.removeRoot());
+  // print(heap.removeRoot());
+  // print(heap.removeRoot());
+  final sorted = heapSort(list);
   print(sorted);
 }

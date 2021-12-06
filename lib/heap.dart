@@ -59,6 +59,10 @@ class Heap<E extends Comparable> {
   }
 
   void _moveDown(int index) {
+    if (_list.length <= 1) {
+      return;
+    }
+
     var parentIndex = index;
     var leftIndex = _leftChild(parentIndex);
     var rightIndex = _rightChild(parentIndex);
@@ -73,7 +77,7 @@ class Heap<E extends Comparable> {
 
       // check right
       if (rightIndex < _list.length &&
-          _firstHasPriority(_list[rightIndex], _list[parentIndex])) {
+          _firstHasPriority(_list[rightIndex], _list[theChosenOne])) {
         theChosenOne = rightIndex;
       }
 

@@ -1,3 +1,5 @@
+import 'package:alg_class/queue.dart';
+
 class Vertex<T> {
   const Vertex(this.value, this.id);
 
@@ -46,8 +48,27 @@ class Graph<E> {
     return _connections.toString();
   }
 
-  List<Vertex<E>> breadthFirstSearch() {
+  List<Vertex<E>> breadthFirstSearch(Vertex<E> source) {
     final returnList = <Vertex<E>>[];
+    Set<Vertex<E>> visited = {};
+    final queue = QueueList<Vertex<E>>();
+
+    visited.add(source);
+    queue.enqueue(source);
+    returnList.add(source);
+
+    while (!queue.isEmpty) {
+      final current = queue.dequeue();
+      final edges = _connections[current] ?? [];
+      for (final edge in edges) {
+        final destination = edge.destination;
+        if (!visited.contains(destination)) {
+          visited.add(destination);
+          returnList.add(destination);
+          queue.enqueue(destination);
+        }
+      }
+    }
 
     return returnList;
   }

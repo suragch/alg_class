@@ -1,6 +1,4 @@
 import 'package:alg_class/graph.dart';
-import 'package:alg_class/heap.dart';
-import 'package:alg_class/heap_sort.dart';
 
 void main() {
   final graph = Graph();
@@ -10,4 +8,5 @@ void main() {
   final kalama = graph.createVertex('Kalama');
 
   graph.addEdge(ub, kalama, 1);
+  List<Vertex> visited = graph.breadthFirstSearch();
 }

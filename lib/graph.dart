@@ -3,6 +3,9 @@ class Vertex<T> {
 
   final T value;
   final int id;
+
+  @override
+  String toString() => value.toString();
 }
 
 class Edge<T> {
@@ -10,6 +13,11 @@ class Edge<T> {
   final Vertex<T> source;
   final Vertex<T> destination;
   final double? weight;
+
+  @override
+  String toString() {
+    return 'from $source to $destination';
+  }
 }
 
 class Graph<E> {
@@ -35,6 +43,12 @@ class Graph<E> {
 
   @override
   String toString() {
-    // TODO: homework
+    return _connections.toString();
+  }
+
+  List<Vertex<E>> breadthFirstSearch() {
+    final returnList = <Vertex<E>>[];
+
+    return returnList;
   }
 }

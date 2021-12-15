@@ -1,20 +1,21 @@
 void main() {
-  // final uniqueWords = Set<String>();
-  // final a = 'Hello';
-  // print(text.codeUnits);
-  // final list = [84, 104, 101];
-  // final string = String.fromCharCodes(list);
-  // print(string);
+  final myMap = <String, int>{};
+  myMap['hi'] = 3;
+  print(myMap['hi']);
 
-  final uniqueWords = Set<String>();
-  List<int> word = [];
+  final wordCountList = <String, int>{};
+  final word = <int>[];
   for (final codeUnit in text.codeUnits) {
     if (isLetter(codeUnit)) {
       word.add(codeUnit);
+    } else if (word.isNotEmpty) {
+      final wordString = String.fromCharCodes(word);
+      final oldCount = wordCountList[wordString] ?? 0;
+      wordCountList[wordString] = oldCount + 1;
+      word.clear();
     }
   }
-  final string = String.fromCharCodes(word);
-  print(string);
+  print(wordCountList);
 }
 
 bool isLetter(int codeUnit) {
@@ -31,7 +32,7 @@ bool isLowercase(int codeUnit) {
 
 // https://en.wikipedia.org/wiki/Mongolia
 final text = '''
-Neolithic agricultural settlements (c. 5500–3500 BC), such as those at 
+Neolithic Neolithic agricultural settlements (c. 5500–3500 BC), such as those at 
 Norovlin, Tamsagbulag, Bayanzag, and Rashaan Khad, predated the introduction of 
 horse-riding nomadism, a pivotal event in the history of Mongolia which became 
 the dominant culture. Horse-riding nomadism has been documented by 

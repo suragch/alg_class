@@ -7,15 +7,26 @@ void main() {
   // print(string);
 
   final uniqueWords = Set<String>();
-  List<int> ints = [];
-  for (int a in text.codeUnits) {
-    if (a == 32) {
-      break;
+  List<int> word = [];
+  for (final codeUnit in text.codeUnits) {
+    if (isLetter(codeUnit)) {
+      word.add(codeUnit);
     }
-    ints.add(a);
   }
-  final string = String.fromCharCodes(ints);
+  final string = String.fromCharCodes(word);
   print(string);
+}
+
+bool isLetter(int codeUnit) {
+  return isUppercase(codeUnit) || isLowercase(codeUnit);
+}
+
+bool isUppercase(int codeUnit) {
+  return codeUnit >= 65 && codeUnit <= 90;
+}
+
+bool isLowercase(int codeUnit) {
+  return codeUnit >= 97 && codeUnit <= 122;
 }
 
 // https://en.wikipedia.org/wiki/Mongolia

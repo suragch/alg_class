@@ -1,8 +1,13 @@
-void main() {
-  final myMap = <String, int>{};
-  myMap['hi'] = 3;
-  print(myMap['hi']);
+import 'package:alg_class/bubble_sort.dart';
 
+void main() {
+  final map = makeTextIntoMap();
+  final list = convertMapToList(map);
+  sortList(list);
+  print(list);
+}
+
+Map<String, int> makeTextIntoMap() {
   final wordCountList = <String, int>{};
   final word = <int>[];
   for (final codeUnit in text.codeUnits) {
@@ -15,7 +20,36 @@ void main() {
       word.clear();
     }
   }
-  print(wordCountList);
+  return wordCountList;
+}
+
+List<Word> convertMapToList(Map<String, int> wordMap) {
+  final wordList = <Word>[];
+  wordMap.forEach((word, frequency) {
+    final newWord = Word(word, frequency);
+    wordList.add(newWord);
+  });
+  return wordList;
+}
+
+void sortList(List<Word> words) {
+  bubbleSort(words);
+}
+
+class Word extends Comparable<Word> {
+  Word(this.word, this.frequency);
+  final String word;
+  final int frequency;
+
+  @override
+  String toString() => '$word $frequency';
+
+  @override
+  int compareTo(Word other) {
+    if (frequency > other.frequency) return 1;
+    if (frequency == other.frequency) return 0;
+    return -1;
+  }
 }
 
 bool isLetter(int codeUnit) {
@@ -84,15 +118,40 @@ the northern regions, where the cold piercing atmosphere comes at an early
 period, I have ordered the proper authorities to transmit yearly to the Shan 
 Yu, a certain amount of grain, gold, silks of the finer and coarser kinds, and 
 other objects. Now peace prevails all over the world; the myriads of the 
-population are living in harmony, and I and the Shan Yu alone are the parents of the people...After the conclusion of the treaty of peace throughout the world, take notice, the Han will not be the first to transgress.[26]
+population are living in harmony, and I and the Shan Yu alone are the parents 
+of the people...After the conclusion of the treaty of peace throughout the 
+world, take notice, the Han will not be the first to transgress.[26]
 
 
 7th-century artifacts found 180 km (112 mi) from Ulaanbaatar.
-Since prehistoric times, Mongolia has been inhabited by nomads who, from time to time, formed great confederations that rose to power and prominence. Common institutions were the office of the Khan, the Kurultai (Supreme Council), left and right wings, imperial army (Keshig) and the decimal military system. The first of these empires, the Xiongnu of undetermined ethnicity, were brought together by Modu Shanyu to form a confederation in 209 BC. Soon they emerged as the greatest threat to the Qin Dynasty, forcing the latter to construct the Great Wall of China. It was guarded by up to almost 300,000 soldiers during Marshal Meng Tian's tenure, as a means of defense against the destructive Xiongnu raids. The vast Xiongnu empire (209 BC–93 AD) was followed by the Mongolic Xianbei empire (93–234 AD), which also ruled more than the entirety of present-day Mongolia. The Mongolic Rouran Khaganate (330–555), of Xianbei provenance was the first to use "Khagan" as an imperial title. It ruled a massive empire before being defeated by the Göktürks (555–745) whose empire was even bigger.
+Since prehistoric times, Mongolia has been inhabited by nomads who, from time
+to time, formed great confederations that rose to power and prominence. Common
+institutions were the office of the Khan, the Kurultai (Supreme Council), left
+and right wings, imperial army (Keshig) and the decimal military system. The 
+first of these empires, the Xiongnu of undetermined ethnicity, were brought 
+together by Modu Shanyu to form a confederation in 209 BC. Soon they emerged 
+as the greatest threat to the Qin Dynasty, forcing the latter to construct 
+the Great Wall of China. It was guarded by up to almost 300,000 soldiers 
+during Marshal Meng Tian's tenure, as a means of defense against the 
+destructive Xiongnu raids. The vast Xiongnu empire (209 BC–93 AD) was 
+followed by the Mongolic Xianbei empire (93–234 AD), which also ruled more 
+than the entirety of present-day Mongolia. The Mongolic Rouran Khaganate 
+(330–555), of Xianbei provenance was the first to use "Khagan" as an imperial 
+title. It ruled a massive empire before being defeated by the Göktürks 
+(555–745) whose empire was even bigger.
 
-The Göktürks laid siege to Panticapaeum, present-day Kerch, in 576. They were succeeded by the Uyghur Khaganate (745–840) who were defeated by the Kyrgyz. The Mongolic Khitans, descendants of the Xianbei, ruled Mongolia during the Liao Dynasty (907–1125), after which the Khamag Mongol (1125–1206) rose to prominence.
+The Göktürks laid siege to Panticapaeum, present-day Kerch, in 576. They were 
+succeeded by the Uyghur Khaganate (745–840) who were defeated by the Kyrgyz. 
+The Mongolic Khitans, descendants of the Xianbei, ruled Mongolia during the 
+Liao Dynasty (907–1125), after which the Khamag Mongol (1125–1206) rose to 
+prominence.
 
-Lines 3–5 of the memorial inscription of Bilge Khagan (684–737) in central Mongolia summarizes the time of the Khagans:
+Lines 3–5 of the memorial inscription of Bilge Khagan (684–737) in central
+ Mongolia summarizes the time of the Khagans:
 
-In battles they subdued the nations of all four sides of the world and suppressed them. They made those who had heads bow their heads, and who had knees genuflect them. In the east up to the Kadyrkhan common people, in the west up to the Iron Gate they conquered... These Khagans were wise. These Khagans were great. Their servants were wise and great too. Officials were honest and direct with people. They ruled the nation this way. This way they held sway over them. When they died ambassadors from Bokuli Cholug (Baekje Korea), Tabgach (Tang China), Tibet (Tibetan Empire), Avar (Avar Khaganate), Rome (Byzantine Empire), Kirgiz, Uch-Kurykan, Otuz-Tatars, Khitans, Tatabis came to the funerals. So many people came to mourn over the great Khagans. They were famous Khagans.[27]
+In battles they subdued the nations of all four sides of the world and 
+suppressed them. They made those who had heads bow their heads, and who had 
+knees genuflect them. In the east up to the Kadyrkhan common people, in the 
+west up to the Iron Gate they conquered... These Khagans were wise. These 
+Khagans were great. Their servants were wise and great too. Officials were honest and direct with people. They ruled the nation this way. This way they held sway over them. When they died ambassadors from Bokuli Cholug (Baekje Korea), Tabgach (Tang China), Tibet (Tibetan Empire), Avar (Avar Khaganate), Rome (Byzantine Empire), Kirgiz, Uch-Kurykan, Otuz-Tatars, Khitans, Tatabis came to the funerals. So many people came to mourn over the great Khagans. They were famous Khagans.[27]
 ''';

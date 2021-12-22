@@ -1,16 +1,29 @@
 import 'package:alg_class/bubble_sort.dart';
 
 void main() {
-  final map = makeTextIntoMap();
+  final lowerCaseText = text.toLowerCase();
+  final map = makeTextIntoMap(lowerCaseText);
   final list = convertMapToList(map);
   sortList(list);
   print(list);
+
+  final userInput = [11, 6, 21, 15];
+  final suggestedWord = findWordsForCode(userInput, list);
+  print(suggestedWord); // such
 }
 
-Map<String, int> makeTextIntoMap() {
+String? findWordsForCode(List<int> userInput, List<Word> wordList) {
+  for (final word in wordList) {
+    if (word.swipeCode == userInput) {
+      return word.word;
+    }
+  }
+}
+
+Map<String, int> makeTextIntoMap(String myText) {
   final wordCountList = <String, int>{};
   final word = <int>[];
-  for (final codeUnit in text.codeUnits) {
+  for (final codeUnit in myText.codeUnits) {
     if (isLetter(codeUnit)) {
       word.add(codeUnit);
     } else if (word.isNotEmpty) {
@@ -26,23 +39,65 @@ Map<String, int> makeTextIntoMap() {
 List<Word> convertMapToList(Map<String, int> wordMap) {
   final wordList = <Word>[];
   wordMap.forEach((word, frequency) {
-    final newWord = Word(word, frequency);
+    final code = generateCode(word);
+    final newWord = Word(word, frequency, code);
     wordList.add(newWord);
   });
   return wordList;
 }
+
+List<int> generateCode(String word) {
+  final codeList = <int>[];
+  for (final charCode in word.codeUnits) {
+    final letter = String.fromCharCode(charCode);
+    final code = codeMap[letter];
+    if (code == null) throw Exception('Your word has a non-letter value!');
+    codeList.add(code);
+  }
+  return codeList;
+}
+
+final codeMap = {
+  'q': 0,
+  'w': 1,
+  'e': 2,
+  'r': 3,
+  't': 4,
+  'y': 5,
+  'u': 6,
+  'i': 7,
+  'o': 8,
+  'p': 9,
+  'a': 10,
+  's': 11,
+  'd': 12,
+  'f': 13,
+  'g': 14,
+  'h': 15,
+  'j': 16,
+  'k': 17,
+  'l': 18,
+  'z': 19,
+  'x': 20,
+  'c': 21,
+  'v': 22,
+  'b': 23,
+  'n': 24,
+  'm': 25,
+};
 
 void sortList(List<Word> words) {
   bubbleSort(words);
 }
 
 class Word extends Comparable<Word> {
-  Word(this.word, this.frequency);
+  Word(this.word, this.frequency, this.swipeCode);
   final String word;
   final int frequency;
+  final List<int> swipeCode;
 
   @override
-  String toString() => '$word $frequency';
+  String toString() => '$word $frequency $swipeCode';
 
   @override
   int compareTo(Word other) {

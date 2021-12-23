@@ -5,20 +5,39 @@ void main() {
   final map = makeTextIntoMap(lowerCaseText);
   final list = convertMapToList(map);
   sortList(list);
-  print(list);
+  //print(list);
 
-  final userInput = [11, 6, 21, 15];
+  // final userInput = [10, 14, 3, 7, 21, 6, 18, 4, 6, 2];
+  final userInput = [18, 8, 17, 7];
   final suggestedWord = findWordsForCode(userInput, list);
   print(suggestedWord); // such
 }
 
-String? findWordsForCode(List<int> userInput, List<Word> wordList) {
+List<String> findWordsForCode(List<int> userInput, List<Word> wordList) {
+  final results = <String>[];
   for (final word in wordList) {
-    if (word.swipeCode == userInput) {
-      return word.word;
+    if (equal(word.swipeCode, userInput)) {
+      results.add(word.word);
     }
   }
+  return results;
 }
+
+bool equal(List<int> listA, List<int> listB) {
+  if (listA.length != listB.length) {
+    return false;
+  }
+  for (var i = 0; i < listA.length; i++) {
+    if (listA[i] != listB[i]) {
+      return false;
+    }
+  }
+  return true;
+}
+
+// bool fuzzyEqual(List<int> listA, List<int> listB) {
+
+// }
 
 Map<String, int> makeTextIntoMap(String myText) {
   final wordCountList = <String, int>{};
@@ -47,9 +66,16 @@ List<Word> convertMapToList(Map<String, int> wordMap) {
 }
 
 List<int> generateCode(String word) {
+  // FIXME: only give one code for double letters
+  // look -> [18, 8, 17]
   final codeList = <int>[];
+  var oldLetter = '';
   for (final charCode in word.codeUnits) {
     final letter = String.fromCharCode(charCode);
+    if (oldLetter == letter) {
+      continue;
+    }
+    oldLetter = letter;
     final code = codeMap[letter];
     if (code == null) throw Exception('Your word has a non-letter value!');
     codeList.add(code);
@@ -121,7 +147,8 @@ bool isLowercase(int codeUnit) {
 
 // https://en.wikipedia.org/wiki/Mongolia
 final text = '''
-Neolithic Neolithic agricultural settlements (c. 5500–3500 BC), such as those at 
+lookkkkkkiing loki looki
+Neolithic Neolithic agricultural agric agr settlements (c. 5500–3500 BC), such as those at 
 Norovlin, Tamsagbulag, Bayanzag, and Rashaan Khad, predated the introduction of 
 horse-riding nomadism, a pivotal event in the history of Mongolia which became 
 the dominant culture. Horse-riding nomadism has been documented by 
@@ -133,7 +160,7 @@ became more developed with the later Okunev culture (2nd millennium BC),
 Andronovo culture (2300–1000 BC) and Karasuk culture (1500–300 BC), culminating 
 with the Iron Age Xiongnu Empire in 209 BC. Monuments of the pre-Xiongnu Bronze 
 Age include deer stones, keregsur kurgans, square slab tombs, and rock 
-paintings.
+paintings. look look
 
 Although cultivation of crops has continued since the Neolithic, agriculture 
 has always remained small in scale compared to pastoral nomadism. Agriculture 
